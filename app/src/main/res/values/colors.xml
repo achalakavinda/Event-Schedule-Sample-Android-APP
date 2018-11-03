@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#273833</color>
+    <color name="black">#000</color>
+    <color name="lightorange">#fdf2df</color>
+    <color name="lightorangedark">#ebd6ab</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!-- cs colours -->
+    <color name="colorBackPanel">#f4f5f9</color>
+    <color name="colorFontPanel">#ffff</color>
+
+    <!-- alpha colors -->
+    <color name="colorFontPanelAlpha">#d9ffffff</color>
+
+    <!-- banner colors -->
+    <color name="colorGeneralBanner">#003366</color>
+    <!-- side menu -->
+    <color name="colorSideMenu">#2574c2</color>
+
+
+    <color name="white">#ffff</color>
+
+    <!-- Button Colors -->
+    <color name="colorBtnPrimary">#003366</color>
+    <color name="colorFacebookBtn">#495fb1</color>
+    <color name="colorYellowBtn">#fcb012</color>
+    <color name="colorLightBlueBtn">#2574c2</color>
+
+    <!--new colours-->
+    <color name="Button_bg">#49B0B6</color>
+    <color name="Body_bg">#002137</color>
+    <color name="Card_bg">#0B3049</color>
+    <color name="Card_header_bg">#218690</color>
+    <color name="Heading_and_title">#FFF</color>
+    <color name="Input_and_normalText">#9EC5D2</color>
+    <color name="login_gradient_top">#002137</color>
+    <color name="login_gradient_down">#0B3049</color>
+    <color name="blue">#01b5e8</color>
+    <color name="cardViewBlue">#5fd5ff</color>
+    <color name="blueFaded">#ce8aecff</color>
+    <color name="bluelightFaded">#cee9ea</color>
+    <color name="darkblue">#0f1b9d</color>
+    <color name="darkgrey">#a0a2a1</color>
+    <color name="commentcard_colour">#e5eaed</color>
+    <color name="postViewBottom">#ebecf1</color>
+
+    <color name="login_aftergradient_down"> #8e9eab</color>
+    <color name="login_aftergradient_top"> #eef2f3</color>
+
+    <color name="transparent">#00000000</color>
+
+    <!-- card colors -->
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow_1">#d4d4d4</color>
+    <color name="card_shadow_2">#dddddd</color>
+    <color name="card_detailing">#eee</color>
+
+
+</resources>
