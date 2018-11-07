@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import util.DialogBox;
+import util.FirebaseMethod;
+import util.StringValidator;
 
 
 /**
@@ -102,8 +104,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
        switch (view.getId()){
 
             case R.id.registerBtn:
-                // new
-                register("achalakavinda25r@gmail.com","admin123");
+                if(validator()){
+                    register(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
+                }else{
+                    DialogBox dBox =  new DialogBox();
+                    dBox.ViewDialogBox(view,"Please Check !",this.error);
+                }
                 break;
             default:
                 break;
@@ -111,9 +117,60 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    public boolean validator(){
+        boolean valiate = true;
+        this.error ="";
+        String name = this.editTextName.getText().toString().trim();
+        String id = this.editTextDeviceID.getText().toString().trim();
+        String email = this.editTextEmail.getText().toString().trim();
+        String password = this.editTextPassword.getText().toString().trim();
+        String comfirmPassword = this.editTextConfirmPassword.getText().toString().trim();
+
+
+        StringValidator sValidator = new StringValidator();
+
+        if(sValidator.isEmptyString(name)){
+            valiate = false;
+            this.error = this.error+"Name,";
+        }
+
+        if(sValidator.isEmptyString(id)){
+            valiate = false;
+            this.error = this.error+" ID,";
+        }
+
+        if(sValidator.isEmptyString(email)){
+            valiate = false;
+            this.error = this.error+" Email,";
+        }else {
+            if(!sValidator.isValidEmailAddress(email)){
+                this.error = this.error +" Invalid Email,";
+            }
+        }
+
+        if(sValidator.isEmptyString(password)){
+            valiate = false;
+            this.error = this.error+" Password,";
+        }
+
+        if(sValidator.isEmptyString(comfirmPassword)){
+            valiate = false;
+            this.error = this.error+" Confirm Password,";
+        }else{
+            if(!password.equals(comfirmPassword)) {
+                valiate = false;
+                this.error = this.error + " Invalid Confirmation Password";
+            }
+        }
+        return valiate;
+    }
+
+
     public void register(String email,String password){
 
         Log.d(TAG,"Register Function call");
+
+        Toast.makeText(getContext(),"Registering.....",Toast.LENGTH_LONG).show();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -123,7 +180,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             Log.d(TAG, "createUserWithEmail:success");
                             Toast.makeText(getActivity().getApplicationContext(),"User Create",Toast.LENGTH_LONG).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            insertUSerData(user.getUid());
+                            insertUSerData(user.getUid());
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             DialogBox dBox = new DialogBox();
@@ -132,6 +189,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
                     }
                 });
+    }
+
+
+    public void insertUSerData(String uui){
+        FirebaseMethod.User us = new FirebaseMethod.User(editTextName.getText().toString(),editTextEmail.getText().toString(),"","000-000 000",editTextDeviceID.getText().toString());
+        FirebaseMethod firebaseMethods = new FirebaseMethod(getActivity().getApplicationContext());
+        firebaseMethods.userRegister(uui,us);
     }
 
 
