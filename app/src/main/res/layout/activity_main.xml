@@ -7,16 +7,7 @@
     tools:context=".MainActivity"
     android:background="@drawable/bg">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorFontPanelAlpha"
-        android:layout_gravity="center_vertical"
-        android:elevation="6dp"/>
-
     <ScrollView
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"

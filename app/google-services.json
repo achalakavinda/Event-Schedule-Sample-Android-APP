@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "721229444111",
+    "firebase_url": "https://todolist-20859.firebaseio.com",
+    "project_id": "todolist-20859",
+    "storage_bucket": "todolist-20859.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721229444111:android:079238b9a31c73dd",
+        "android_client_info": {
+          "package_name": "com.opensource.schedular"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721229444111-3f4fc11v0ui298ubnlq8kgevaegqdgsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANvslDwNk3w4LWaHOeU7Jk6xrotyIZbkk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

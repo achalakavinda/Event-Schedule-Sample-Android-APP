@@ -61,4 +61,19 @@
     <color name="card_detailing">#eee</color>
 
 
+
+
+    <!-- custom -->
+    <color name="backgroundmain">#f4f5f9</color>
+    <color name="Button_and_field_Colour">#013244</color>
+    <color name="Button_Delete">#e74c3c</color>
+    <color name="display_txt_colour">#7697A2</color>
+
+
+
+    <!-- Text Color -->
+    <color name="colorTextPrimary">#1e272e</color>
+
+
+
 </resources>

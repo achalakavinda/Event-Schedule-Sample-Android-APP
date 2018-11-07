@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="field_button_height">40dp</dimen>
+
+    <!--imge icon dimentions-->
+    <dimen name="img_icon_LengthAndWidth">30dp</dimen>
+    <dimen name="img_icon_layout_marginLeft">8dp</dimen>
+    <dimen name="img_icon_paddin">4dp</dimen>
+
+
+    <dimen name="textSize">13sp</dimen>
+    <dimen name="textSizeTitle">15sp</dimen>
+    <dimen name="post_image_size">300sp</dimen>
+    <dimen name="top_margin">5sp</dimen>
+    <dimen name="no_post_text">20sp</dimen>
+</resources>
