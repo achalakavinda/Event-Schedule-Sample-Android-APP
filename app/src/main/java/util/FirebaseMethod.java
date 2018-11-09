@@ -64,7 +64,15 @@ public class FirebaseMethod {
         myRef.child("user_details").child(userID).setValue(us);
     }
 
-    public void userRegister(String userID,FirebaseMethod.User us){
+    public String getUserID() {
+        return userID;
+    }
+
+    public DatabaseReference getMyRef() {
+        return myRef;
+    }
+
+    public void userRegister(String userID, FirebaseMethod.User us){
         myRef.child("user_details").child(userID).setValue(us);
     }
 

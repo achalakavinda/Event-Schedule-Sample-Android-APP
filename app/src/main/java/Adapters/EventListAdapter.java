@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.opensource.schedular.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import Model.EventModel;
@@ -31,11 +33,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         // each data item is just a string in this case
 
         public View layout;
-
-
-
         //custom view variables
         public LinearLayout linearLayoutPostItemCard;
+
+        public TextView time;
+        public TextView description;
 
         public ViewHolder(View v) {
             super(v);
@@ -43,6 +45,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
             //custom view variable initialize
             linearLayoutPostItemCard = (LinearLayout) v.findViewById(R.id.EventItemCard);
+
+            time = (TextView) v.findViewById(R.id.time);
+            description = (TextView) v.findViewById(R.id.description);
         }
     }
 
@@ -86,7 +91,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
 
-//        holder.textViewName.setText(values.get(position).getUsername().toString());
+
+        holder.time.setText(values.get(position).Raw_Hour+":"+values.get(position).Raw_Min);
+        holder.description.setText(values.get(position).description);
+
 
 
         Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
