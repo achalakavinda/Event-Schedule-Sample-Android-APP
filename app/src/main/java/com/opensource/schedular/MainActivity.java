@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void EventListView(int year, int month, int dayOfMonth){
             intent = new Intent(this.avtivityContext,EventListActivity.class);
+            intent.putExtra("year",String.valueOf(year));
+            intent.putExtra("month",String.valueOf(month));
+            intent.putExtra("day",String.valueOf(dayOfMonth));
             startActivity(intent);
     }
 }

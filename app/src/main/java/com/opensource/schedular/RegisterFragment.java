@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
 
     private View view = null;
+
+    private ProgressBar progressBar;
 
 
     private EditText editTextName;
@@ -63,6 +66,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         editTextEmail = (EditText) view.findViewById(R.id.rgemail);
         editTextPassword = (EditText) view.findViewById(R.id.rgpassword);
         editTextConfirmPassword = (EditText) view.findViewById(R.id.rgcommfirmpassword);
+
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
 
         // set password hint when no txt
@@ -98,9 +104,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view)
     {
-        //        new
-
-//
        switch (view.getId()){
 
             case R.id.registerBtn:
@@ -170,7 +173,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         Log.d(TAG,"Register Function call");
 
-        Toast.makeText(getContext(),"Registering.....",Toast.LENGTH_LONG).show();
+        progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -182,6 +185,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             FirebaseUser user = mAuth.getCurrentUser();
                             insertUSerData(user.getUid());
                         } else {
+                            progressBar.setVisibility(View.GONE);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             DialogBox dBox = new DialogBox();
                             dBox.ViewDialogBox(view,"Wrong!",task.getException().getMessage());
@@ -196,6 +200,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         FirebaseMethod.User us = new FirebaseMethod.User(editTextName.getText().toString(),editTextEmail.getText().toString(),"","000-000 000",editTextDeviceID.getText().toString());
         FirebaseMethod firebaseMethods = new FirebaseMethod(getActivity().getApplicationContext());
         firebaseMethods.userRegister(uui,us);
+        progressBar.setVisibility(View.GONE);
     }
 
 

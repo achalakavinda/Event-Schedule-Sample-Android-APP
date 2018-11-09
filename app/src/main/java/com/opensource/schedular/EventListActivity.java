@@ -1,7 +1,9 @@
 package com.opensource.schedular;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,18 +20,27 @@ import Model.EventModel;
 
 public class EventListActivity extends Activity implements View.OnClickListener{
 
+    private Intent intent;
     private TimePicker timePicker1;
     private TextView time;
     private Calendar calendar;
     private String format = "";
+
+    private FloatingActionButton floatingActionButton;
 
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private TextView datetimeTextView;
 
     List<EventModel> input = new ArrayList<>();
+
+
+    String YEAR = "";
+    String MONTH = "";
+    String DAY = "";
 
 
 
@@ -37,21 +48,40 @@ public class EventListActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
-        timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
 
-//        time = (TextView) findViewById(R.id.textView1);
+        intent = getIntent();
+
+        YEAR = intent.getStringExtra("year");
+        MONTH = intent.getStringExtra("month");
+        DAY = intent.getStringExtra("day");
+
+        //components
+        timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
         calendar = Calendar.getInstance();
+
+        datetimeTextView = findViewById(R.id.datetime);
+
+        datetimeTextView.setText(YEAR+"/"+MONTH+"/"+DAY);
+
+
+        //recycle view
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        //buttons
+        floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(this);
 
 
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
         showTime(hour, min);
 
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+
 
         input.add(new EventModel());
         input.add(new EventModel());

@@ -27,16 +27,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-//        switch (v.getId()){
-//            case R.id.login:
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//                break;
-//
-//                default:
-//                    break;
-//        }
-
     }
 
 

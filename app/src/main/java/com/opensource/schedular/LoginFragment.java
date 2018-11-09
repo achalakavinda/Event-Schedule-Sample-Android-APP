@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,7 +38,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private Button loginButton;
     private View view;
-//    private ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     private EditText editTextUsername;
     private EditText editTextPassword;
@@ -67,14 +68,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        editTextUsername = (EditText) view.findViewById(R.id.usernamelogin);
-        editTextPassword = (EditText) view.findViewById(R.id.passwordlogin);
-        loginButton = (Button) view.findViewById(R.id.loginBtn);
+        editTextUsername =  view.findViewById(R.id.usernamelogin);
+        editTextPassword =  view.findViewById(R.id.passwordlogin);
+        loginButton =  view.findViewById(R.id.loginBtn);
         loginButton.setOnClickListener(this);
+
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
 
         // set password hint when no txt
         editTextPassword.setHint("PASSWORD");
+
         editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (editTextPassword.getText().length() > 0)
@@ -98,15 +103,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Toast.makeText(getActivity(),"Please Check Fields",Toast.LENGTH_SHORT);
 
         switch (view.getId()){
-
             case R.id.loginBtn:
                 Log.d(TAG,"Onclick Login Button");
-
                 loginFn();
-
-                // new
-//                //
-//                pushHome();
                 break;
             default:
                 break;
@@ -119,10 +118,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         getActivity().finish();
     }
 
+
     public void loginFn() {
         init();
     }
-
 
     private void init(){
         String email = editTextUsername.getText().toString();
@@ -131,14 +130,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             Log.d(TAG,"yes this is call");
             new DialogBox().ViewDialogBox(view,"Please Check",error);
         }else {
+            progressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                progressBar.setVisibility(View.GONE);
                                 Log.d(TAG, "signInWithEmail:success");
                                 pushHome();
                             } else {
+                                progressBar.setVisibility(View.GONE);
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 alert("signInWithEmail:failure");
                                 DialogBox Dbox = new DialogBox();
@@ -150,6 +152,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //field validator
     private boolean isStringNull(String string,int con){
         StringValidator sValidate = new StringValidator();
         switch (con){
@@ -173,10 +176,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return  true;
     }
 
+    //alert method
     private void alert(String str){
-        Toast toast = Toast.makeText(
-                getActivity().getApplicationContext(), str, Toast.LENGTH_LONG
-        );
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), str, Toast.LENGTH_LONG);
         toast.show();
     }
 
