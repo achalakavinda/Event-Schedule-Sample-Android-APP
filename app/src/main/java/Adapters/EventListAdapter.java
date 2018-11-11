@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,9 @@ import Model.EventModel;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
+
+
+    public EventListListener eventListListener;
     private List<EventModel> values;
 
     // Provide a reference to the views for each data item
@@ -105,28 +109,21 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         holder.linearLayoutPostItemCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                remove(position);
-//                switch (v.getId()){
-//
-//                    case R.id.postItemCard:
-//                        Context context = v.getContext();
+
+                switch (v.getId()){
+
+                    case R.id.EventItemCard:
+                        Context context = v.getContext();
 //                        Intent intent = new Intent(context,SinglePostActivity.class);
-//
+
 //                        intent.putExtra("Name",values.get(position).getName().toString());
-//                        intent.putExtra("Date",values.get(position).getDate().toString());
-//                        intent.putExtra("AvatarImageUrl",values.get(position).getAvatarImageUrl().toString());
-//                        intent.putExtra("Description",values.get(position).getDescription().toString());
-//                        intent.putExtra("Likes",values.get(position).getLikes().toString());
-//                        intent.putExtra("Id",values.get(position).getId().toString());
-//                        intent.putExtra("user_id",values.get(position).getUser_id().toString());
-//                        intent.putExtra("username",values.get(position).getUsername().toString());
-//
-//
+                        System.out.println(values.get(position).description.toString());
+                        eventListListener.valuePass(values.get(position));
 //                        context.startActivity(intent);
-//                        break;
-//                    default:
-//                        return;
-//                }
+                        break;
+                    default:
+                        return;
+                }
             }
         });
 
@@ -138,5 +135,22 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         return values.size();
     }
 
+    @Override
+    public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        try{
+            eventListListener = (EventListListener) recyclerView.getContext();
+        }catch (ClassCastException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public interface EventListListener{
+        void valuePass(EventModel eventDesc);
+    }
 }

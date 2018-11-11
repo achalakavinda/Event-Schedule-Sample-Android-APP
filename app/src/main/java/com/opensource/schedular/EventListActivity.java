@@ -28,7 +28,7 @@ import Adapters.EventListAdapter;
 import Model.EventModel;
 import util.FirebaseMethod;
 
-public class EventListActivity extends AppCompatActivity implements View.OnClickListener ,InputDialog.InputDialogListener{
+public class EventListActivity extends AppCompatActivity implements View.OnClickListener ,InputDialog.InputDialogListener, EventListAdapter.EventListListener{
 
     private FirebaseMethod firebaseMethod;
 
@@ -147,8 +147,14 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
                 .child(firebaseMethod.getUserID()).child("event")
                 .child(DATE_ID).push();
 
-                ref.setValue(new EventModel(DATE_ID,TIME_ID,eventDesc,YEAR,MONTH,DAY,timePicker1.getCurrentHour().toString(),timePicker1.getCurrentMinute().toString()));
+                ref.setValue(new EventModel(ref.getKey(),DATE_ID,TIME_ID,eventDesc,YEAR,MONTH,DAY,timePicker1.getCurrentHour().toString(),timePicker1.getCurrentMinute().toString()));
 
+    }
+
+    @Override
+    public void valuePass(EventModel eventDesc) {
+        System.out.println("value pass event"+eventDesc.description.toString());
+        openDialog();
     }
 
     public void showTime(int hour, int min) {

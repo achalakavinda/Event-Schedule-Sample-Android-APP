@@ -2,6 +2,7 @@ package Model;
 
 public class EventModel {
 
+    public String Id;
     public String date;
     public String time;
     public String description;
@@ -15,7 +16,8 @@ public class EventModel {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public EventModel(String date, String time, String description ,String Raw_Year,String Raw_Month,String Raw_Day,String Raw_Hour, String Raw_Min) {
+    public EventModel(String Id,String date, String time, String description ,String Raw_Year,String Raw_Month,String Raw_Day,String Raw_Hour, String Raw_Min) {
+        this.Id = Id;
         this.date = date;
         this.time = time;
         this.description = description;
