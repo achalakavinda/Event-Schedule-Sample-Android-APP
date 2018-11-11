@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorFontPanelAlpha"
     android:layout_marginBottom="2dp"
@@ -10,12 +10,14 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:layout_width="50dp"
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
         android:layout_height="50dp"
         android:src="@drawable/ac"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="0.9"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp">
