@@ -1,7 +1,6 @@
 package com.opensource.schedular;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,19 +16,30 @@ public class InputDialog extends AppCompatDialogFragment {
     private InputDialogListener inputDialogListener;
 
     private String Title = "";
-
-   public InputDialog(){}
+    private String Description = "";
+    private String Year_id = "";
+    private String Time_id = "";
+    private String id = "";
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        this.id = getArguments().getString("id");
+        this.Year_id = getArguments().getString("Year_id");
+        this.Time_id = getArguments().getString("Time_id");
         this.Title = getArguments().getString("value");
+        this.Description = getArguments().getString("description");
+
+
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog,null);
+
+
         editTextEvent = view.findViewById(R.id.editTextEvent);
+        editTextEvent.setText(this.Description);
 
         builder.setView(view).setTitle(Title).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -39,11 +49,16 @@ public class InputDialog extends AppCompatDialogFragment {
         }).setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                inputDialogListener.applyText(editTextEvent.getText().toString());
+
+                if(id == null){
+                    inputDialogListener.applyText(editTextEvent.getText().toString());
+                    System.out.println("add text call");
+                }else {
+                    inputDialogListener.editText(id,Year_id,Time_id,editTextEvent.getText().toString());
+                    System.out.println("update text call");
+                }
             }
         });
-
-
 
         return builder.create();
     }
@@ -60,5 +75,6 @@ public class InputDialog extends AppCompatDialogFragment {
 
     public interface InputDialogListener{
         void applyText(String eventDesc);
+        void editText(String id, String year_id,String time_id,String description);
     }
 }

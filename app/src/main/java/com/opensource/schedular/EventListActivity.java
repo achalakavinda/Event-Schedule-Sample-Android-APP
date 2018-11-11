@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 import Adapters.EventListAdapter;
 import Model.EventModel;
@@ -117,8 +118,18 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
          }
 
          @Override
-         public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+         public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+             EventModel eventModel = dataSnapshot.getValue(EventModel.class);
+             for (int i = 0; i < input.size(); i++) {
+                 if (input.get(i).Id == eventModel.Id){
+                     input.remove(i);
+                     input.add(eventModel);
+                 }
+             }
+             mAdapter = new EventListAdapter(input);
+             recyclerView.setAdapter(mAdapter);
 
+         }
          @Override
          public void onChildRemoved(DataSnapshot dataSnapshot) {}
 
@@ -127,7 +138,10 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
 
          @Override
          public void onCancelled(DatabaseError databaseError) {}
-     });
+             });
+
+
+
 
 
 
@@ -141,8 +155,6 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
         String DATE_ID = YEAR+"-"+MONTH+"-"+DAY;
         String TIME_ID = timePicker1.getCurrentHour().toString()+"-"+timePicker1.getCurrentMinute().toString();
 
-
-
         DatabaseReference ref = databaseReference.child("user_details")
                 .child(firebaseMethod.getUserID()).child("event")
                 .child(DATE_ID).push();
@@ -152,9 +164,20 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void valuePass(EventModel eventDesc) {
-        System.out.println("value pass event"+eventDesc.description.toString());
-        openDialog();
+    public void editText(String id, String year_id, String time_id, String description) {
+
+        DatabaseReference ref = databaseReference.child("user_details")
+                .child(firebaseMethod.getUserID()).child("event")
+                .child(year_id).child(id).child("description");
+
+        ref.setValue(description);
+
+
+    }
+
+    @Override
+    public void valuePass(EventModel event) {
+        openEditDialog( event);
     }
 
     public void showTime(int hour, int min) {
@@ -194,4 +217,22 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
         inputDialog.setArguments(args);
         inputDialog.show(getSupportFragmentManager(),"");
     }
+
+
+    public void openEditDialog(EventModel event){
+        InputDialog inputDialog = new InputDialog();
+        Bundle args = new Bundle();
+        String DATE_ID = event.Raw_Year+"-"+event.Raw_Month+"-"+event.Raw_Day;
+        String TIME_ID = event.Raw_Hour+"-"+event.Raw_Min;
+
+        args.putString("value",event.Raw_Year+"/"+event.Raw_Month+"/"+event.Raw_Day+"  "+event.Raw_Hour+":"+event.Raw_Min);
+        args.putString("description",event.description);
+        args.putString("Year_id",DATE_ID);
+        args.putString("Time_id",TIME_ID);
+        args.putString("id",event.Id);
+
+        inputDialog.setArguments(args);
+        inputDialog.show(getSupportFragmentManager(),"Edit View");
+    }
+
 }
