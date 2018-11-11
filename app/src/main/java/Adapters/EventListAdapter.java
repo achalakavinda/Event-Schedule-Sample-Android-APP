@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +44,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         public TextView time;
         public TextView description;
 
+
+        public ImageButton imageButtonDelete;
+
         public ViewHolder(View v) {
             super(v);
             layout = v;
@@ -52,6 +56,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
             time = (TextView) v.findViewById(R.id.time);
             description = (TextView) v.findViewById(R.id.description);
+            imageButtonDelete = (ImageButton) v.findViewById(R.id.deleteBtn);
         }
     }
 
@@ -111,15 +116,24 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             public void onClick(View v) {
 
                 switch (v.getId()){
-
                     case R.id.EventItemCard:
-                        Context context = v.getContext();
-//                        Intent intent = new Intent(context,SinglePostActivity.class);
-
-//                        intent.putExtra("Name",values.get(position).getName().toString());
                         System.out.println(values.get(position).description.toString());
                         eventListListener.valuePass(values.get(position));
-//                        context.startActivity(intent);
+                        break;
+                    default:
+                        return;
+                }
+            }
+        });
+
+        holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (v.getId()){
+                    case R.id.deleteBtn:
+                        System.out.println(values.get(position).description.toString());
+                        eventListListener.deleteRecord(values.get(position));
                         break;
                     default:
                         return;
@@ -152,5 +166,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     public interface EventListListener{
         void valuePass(EventModel eventDesc);
+        void deleteRecord(EventModel eventModel);
     }
 }

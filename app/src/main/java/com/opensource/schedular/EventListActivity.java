@@ -131,7 +131,18 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
 
          }
          @Override
-         public void onChildRemoved(DataSnapshot dataSnapshot) {}
+         public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+             EventModel eventModel = dataSnapshot.getValue(EventModel.class);
+             for (int i = 0; i < input.size(); i++) {
+                 if (input.get(i).Id == eventModel.Id){
+                     input.remove(i);
+                 }
+             }
+             mAdapter = new EventListAdapter(input);
+             recyclerView.setAdapter(mAdapter);
+
+         }
 
          @Override
          public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
@@ -178,6 +189,18 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void valuePass(EventModel event) {
         openEditDialog( event);
+    }
+
+    @Override
+    public void deleteRecord(EventModel eventModel) {
+        deleteTuple(eventModel);
+    }
+
+    public void deleteTuple(EventModel eventModel) {
+        String DATE_ID = eventModel.Raw_Year+"-"+eventModel.Raw_Month+"-"+eventModel.Raw_Day;
+        databaseReference.child("user_details")
+                .child(firebaseMethod.getUserID()).child("event")
+                .child(DATE_ID).child(eventModel.Id).removeValue();
     }
 
     public void showTime(int hour, int min) {
