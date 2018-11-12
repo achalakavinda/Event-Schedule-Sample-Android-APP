@@ -1,9 +1,12 @@
 package com.opensource.schedular;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,12 +31,15 @@ import java.util.function.Consumer;
 
 import Adapters.EventListAdapter;
 import Model.EventModel;
+import util.DialogBox;
 import util.FirebaseMethod;
+import util.StringValidator;
 
 public class EventListActivity extends AppCompatActivity implements View.OnClickListener ,InputDialog.InputDialogListener, EventListAdapter.EventListListener{
 
     private FirebaseMethod firebaseMethod;
 
+    private String error;
     private DatabaseReference databaseReference;
 
     private Intent intent;
@@ -151,20 +158,31 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
          public void onCancelled(DatabaseError databaseError) {}
              });
 
-
-
-
-
-
-
     }
 
 
+    //field validator
+    private boolean isStringNull(String string,int con){
+        StringValidator sValidate = new StringValidator();
+        switch (con){
+            case 1:
+                if(sValidate.isEmptyString(string)){
+                    error = " Description";
+                    return false;
+                }
+        }
+        return  true;
+    }
 
     @Override
     public void applyText(String eventDesc) {
         String DATE_ID = YEAR+"-"+MONTH+"-"+DAY;
         String TIME_ID = timePicker1.getCurrentHour().toString()+"-"+timePicker1.getCurrentMinute().toString();
+
+        if(!isStringNull(eventDesc,1)){
+            ViewDialogBox("Please Check",error);
+            return;
+        }
 
         DatabaseReference ref = databaseReference.child("user_details")
                 .child(firebaseMethod.getUserID()).child("event")
@@ -177,6 +195,11 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void editText(String id, String year_id, String time_id, String description) {
 
+        if(!isStringNull(description,1)){
+            ViewDialogBox("Please Check",error);
+            return;
+        }
+
         DatabaseReference ref = databaseReference.child("user_details")
                 .child(firebaseMethod.getUserID()).child("event")
                 .child(year_id).child(id).child("description");
@@ -184,6 +207,10 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
         ref.setValue(description);
 
 
+    }
+
+    public void ViewDialogBox( String title, String msg){
+        Toast.makeText(this,"Check field "+msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -215,9 +242,7 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
         } else {
             format = "AM";
         }
-
-//        FinalTime = new StringBuilder().append(hour).append(" : ").append(min).append(" ").append(format).toString();
-    }
+ }
 
     @Override
     public void onClick(View v) {

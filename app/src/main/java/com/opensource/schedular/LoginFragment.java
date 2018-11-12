@@ -126,7 +126,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void init(){
         String email = editTextUsername.getText().toString();
         String password =  editTextPassword.getText().toString();
-        if(!isStringNull(email,1) && !isStringNull(password,2)){
+        if(!isStringNull(email,1) || !isStringNull(password,2)){
             Log.d(TAG,"yes this is call");
             new DialogBox().ViewDialogBox(view,"Please Check",error);
         }else {

@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Context avtivityContext;
     private Intent intent;
     private CardView cardViewProfileBtn;
-    private CardView cardViewAddBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         avtivityContext = getApplicationContext();
         calendarView = findViewById(R.id.calendarView);
 
-        cardViewAddBtn = findViewById(R.id.addCardBtn);
         cardViewProfileBtn = findViewById(R.id.profileCardBtn);
 
         cardViewProfileBtn.setOnClickListener(this);
-        cardViewAddBtn.setOnClickListener(this);
 
     }
 
@@ -50,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         System.out.println("item click");
         switch (v.getId()){
-            case R.id.addCardBtn:
-
-                break;
             case R.id.profileCardBtn:
                 intent = new Intent(this.avtivityContext,ProfileActivity.class);
                 startActivity(intent);
