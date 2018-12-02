@@ -209,7 +209,7 @@ public class EventListActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    public void ViewDialogBox( String title, String msg){
+    public void ViewDialogBox(String title, String msg){
         Toast.makeText(this,"Check field "+msg,Toast.LENGTH_SHORT).show();
     }
 

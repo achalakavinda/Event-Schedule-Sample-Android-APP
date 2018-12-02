@@ -20,8 +20,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +32,6 @@
 
                 <EditText
                     android:id="@+id/usernamelogin"
-                    android:text="achalakavinda25r@gmail.com"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/field_button_height"
                     android:layout_alignParentStart="true"
@@ -78,7 +76,6 @@
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/passwordlogin"
-                    android:text="admin123"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/field_button_height"
                     android:gravity="center|left"
@@ -122,6 +119,14 @@
             android:orientation="vertical"
             android:paddingBottom="20dp"
             android:id="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/forgetpasswordTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/Input_and_normalText"
+                android:text="Forget Password ?"/>
 
 
 

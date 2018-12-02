@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,6 +44,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText editTextUsername;
     private EditText editTextPassword;
 
+    private TextView forgetpasswordTextView;
+
     public LoginFragment()
     {
         // Required empty public constructor
@@ -71,6 +74,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         editTextUsername =  view.findViewById(R.id.usernamelogin);
         editTextPassword =  view.findViewById(R.id.passwordlogin);
         loginButton =  view.findViewById(R.id.loginBtn);
+
+        forgetpasswordTextView = view.findViewById(R.id.forgetpasswordTextView);
+        forgetpasswordTextView.setOnClickListener(this);
+
         loginButton.setOnClickListener(this);
 
         progressBar = view.findViewById(R.id.progressBar);
@@ -107,9 +114,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG,"Onclick Login Button");
                 loginFn();
                 break;
+            case R.id.forgetpasswordTextView:
+                openDialog();
+                break;
             default:
                 break;
         }
+    }
+
+    public void openDialog(){
+        InputDialog inputDialog = new InputDialog();
+        Bundle args = new Bundle();
+        args.putString("type","this not null");
+        args.putString("value","Please Enter email to reset you're password");
+        inputDialog.setArguments(args);
+        inputDialog.show(getChildFragmentManager(),"");
     }
 
     private void pushHome(){

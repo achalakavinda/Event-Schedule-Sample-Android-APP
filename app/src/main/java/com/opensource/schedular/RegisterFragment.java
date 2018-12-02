@@ -184,15 +184,26 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getActivity().getApplicationContext(),"User Create",Toast.LENGTH_LONG).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             insertUSerData(user.getUid());
+                            clear();
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             DialogBox dBox = new DialogBox();
                             dBox.ViewDialogBox(view,"Wrong!",task.getException().getMessage());
+                            clear();
                         }
 
                     }
                 });
+    }
+
+    public void clear(){
+        editTextName.setText("");
+        editTextDeviceID.setText("");
+        editTextEmail.setText("");
+        editTextPassword.setText("");
+        editTextConfirmPassword.setText("");
+        editTextPassword.setHint("PASSWORD");
     }
 
 
